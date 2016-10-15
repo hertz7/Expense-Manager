@@ -1,0 +1,106 @@
+{% extends 'Main/base.html' %}
+
+
+{% block body %}<head>
+<style>
+    @media (max-width: 768px) {
+        .page-header-small {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .page-header-small-pointer {
+            cursor: pointer;
+        }
+    }
+    #date_in{
+        width:225px;
+        float: none;
+    }
+    #date_out{
+        width: 225px;
+        float:none;
+    }
+</style></head>
+<body><br><br><br>
+<div class="container-fluid" >
+
+        <div class="row">
+            <div class="col-sm-3 col-xs-12 left-column" > <!-- left column --><br><br><br><br>
+                <div class="container-fluid" style="border: 1px solid black">
+
+                    <div class="row"> <!-- filters -->
+                        <div class="filter-well shadow-box col-sm-12 col-xs-10">
+
+
+<div id="filter-page-header" class="page-header page-header-small page-header-small-pointer">
+  <div onclick="showFilters();" class="container-cat-header"><span>&nbsp;<strong>Filter results</strong></span><span id="filter-icon-down" class="glyphicon glyphicon-menu-down visible-xs pull-left"></span></div>
+
+</div>
+<div id="filter-contents" class="hidden-xs">
+<form method="post" action="{% url 'Main:transactions' %}">
+    {% csrf_token %}
+<div class="form-group">
+  <div class="input-group">
+              <label for="date_in" class="control-label order_by_label_jom">From: &nbsp </label>
+
+    <input class="form-control" type="date" name="date_in" id="date_in" size="16"  value=""  placeholder="From"/>
+
+  </div>
+</div>
+<div class="form-group">
+  <div class="input-group">
+              <label for="date_out" class="control-label order_by_label_jom">To:&nbsp &nbsp &nbsp &nbsp</label>
+
+    <input class="form-control " type="date" name="date_out" id="date_out"   value="" placeholder="To"/>
+      </div>
+</div>
+
+
+<input type="submit" class="btn btn-info btn-sm"><br><br>
+     </form>
+    </div>
+    </div>
+                        </div>
+                    </div></div>
+
+
+<div class="col-sm-8">
+
+    <div class="row-horizontal">
+         <div style="text-align: center;"> <h2 class="page-header">Transactions</h2></div>
+        <input type="text" align="right" id="search" placeholder="Type to search"></div>
+          <div class="table-responsive">
+            <table class="table table-striped" id="table">
+              <thead>
+                <tr>
+                  <th>Sr No.</th>
+                  <th>Name</th>
+                  <th>Category/Source</th>
+                  <th>Amount</th>
+                  <th>Date</th>
+                    <th> Details </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% include 'Main/table_template_dash.html' %}
+              </tbody>
+            </table>
+          </div>
+    <a href="{% url 'Main:transactions' %}" >Show All Records</a>
+
+        </div>
+      </div>
+    <script type="text/javascript">
+var $rows = $('#table tr').not('thead tr');
+$('#search').keyup(function() {
+    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+
+    $rows.show().filter(function() {
+        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+        return !~text.indexOf(val);
+    }).hide();
+});
+    </script>
+</body>{% endblock %}

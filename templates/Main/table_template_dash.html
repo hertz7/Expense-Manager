@@ -1,0 +1,484 @@
+
+<head>
+
+
+    <style type="text/css">
+
+.head-container {
+    text-transform: inherit;
+    padding-top: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 15px;
+}
+
+.head-containerbs3 {
+    text-transform: inherit;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 15px;
+}
+
+.category-color-bar {
+    height: 5px !important;
+    min-height: 5px !important;
+}
+
+.item-title {
+    font-size: 40px;
+}
+
+.item-titlebs3 {
+    font-size: 40px;
+}
+
+.item-amount {
+    white-space: nowrap;
+    font-size: 50px;
+}
+
+.item-amountbs3{
+    white-space: nowrap;
+    font-size: 50px;
+    font-weight: 400 !important;
+}
+
+.item-date-div {
+    padding-top: 3px;
+}
+
+.item-date {
+    font-size: 16px;
+}
+
+.positive-amount-details {
+    font-weight: 500;
+    color:#4cb07d;
+}
+
+.negative-amount-details {
+    font-weight: 500;
+    color:#bd4c4f;
+}
+
+.zero-amount-details {
+    font-weight: 500;
+    color:#bdbdbd;
+}
+
+.amount-div-details {
+    text-align: right;
+    height: 100%;
+    padding-top: 25px;
+}
+
+.name-date {
+    padding-top: 15px;
+}
+
+.column-details {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 15px;
+}
+
+.left-column-details {
+    border-right: 1px solid rgb(225,225,225);
+    padding-left: 30px;
+}
+
+.right-column-details {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.label-details {
+    font-size: 11px;
+    color: #757575;
+}
+
+.value-details {
+    font-size: 14px;
+}
+
+.label-details-div {
+    margin-bottom: -10px;
+}
+
+.horizontal-separator-out {
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+.horizontal-separator-in {
+    border-bottom: 1px solid rgb(215,215,215);
+    height: 1px !important;
+    min-height: 1px !important;
+
+}
+.carousel-inner>.item>a>img, .carousel-inner>.item>img, .img-responsive, .thumbnail a>img, .thumbnail>img {
+    display: block;
+    max-width: 100px;
+    height: 100px;
+}
+    </style>
+</head>
+
+
+{% if expenses %}
+
+
+    {% for expense in expenses  %}
+            {% if expense.option == "Expense" %}
+                <tr class="danger">
+                    <td>{{ forloop.counter }}</td>
+                  <td>{{ expense.paid_to }}</td>
+                  <td>{{ expense.subcategories }}</td>
+                  <td>{{ expense.cost }}</td>
+                  <td>{{ expense.date_created }}</td>
+                    <td><button type="button" class="btn btn-info btn-sm" id="bt1" data-toggle="modal" data-target="#{{ expense.id }}">Detail</button>
+                <a type="submit" class="btn btn-danger btn-sm" href="{% url 'Main:delete' expense.pk %}">Delete</a>
+
+                            <div class="modal fade" id="{{ expense.id }}" role="dialog">
+                       <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body"><div class="row">
+    <div class="col-sm-12 head-containerbs3">
+        <div class="col-sm-7 name-date">
+            <div class="row">
+                <span class="item-titlebs3">{{ expense.paid_to }}</span>
+            </div>
+            <div class="row item-date-div">
+                <span class="item-date">{{ expense.date_created }}</span>
+            </div>
+        </div>
+        <div class="col-sm-5 amount-div-details"><span id="sp1" class="item-amountbs3 negative-amount-details"> </span></div>
+    </div>
+          <script>
+$(document).ready(function(){
+    $("#bt1").click(function(){
+        var x={{ expense.cost }};
+                var y = {{ expense.tax_details }};
+
+                        var z=x-(y*x/100);
+        $("#sp1").html('&#x20B9'+'&nbsp'+z);
+    });
+        });
+                </script>
+</div>
+<div class="row">
+    <div class="col-sm-12 category-color-bar" style="background-color: #FFFFFF;"></div>
+</div>
+<div class="row">
+    <div class="col-sm-6 column-details left-column-details"> <!-- left column -->
+        <!-- category -->
+        <div class="row">
+            <div class="col-sm-12">
+                <span class="label-details">Category</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <span class="value-details">{{ expense.subcategories }}</span>
+            </div>
+        </div>
+        <!-- account -->
+        <div class="row">
+            <div class="col-sm-12">
+                <span class="label-details">Source</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <span class="value-details">{{ expense.source }}</span>
+            </div>
+        </div>
+
+        <!-- vat id -->
+                <!-- external reference -->
+
+        <div class="row horizontal-separator-out">
+            <div class="col-sm-12 horizontal-separator-in"></div>
+        </div>
+
+                <div class="row">
+            <div class="col-sm-6">
+                <!-- tax -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="label-details">Tax</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="value-details">{{ expense.tax_details }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <!-- tax deductable -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="label-details">VAT ID</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="value-details">{{ expense.vat }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <!-- base -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="label-details">Type</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="value-details">{{ expense.option}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <!-- value tax -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="label-details">External Reference</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="value-details">{{ expense.external_ref }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </div>
+    <div class="col-sm-6 column-details right-column-details"> <!-- right column -->
+        <!-- description -->
+                <!-- long description -->
+                <!-- attachment -->
+                <div class="row"></div>
+        <!-- is recurrent -->
+        <div class="row">
+            <div class="col-sm-12">
+                <span class="label-details">Is recurrent: {{ expense.is_recurrent }}</span>
+            </div>
+        </div><br><br>
+        <div class="row">
+            <div class="col-sm-12">
+                <span class="value-details"><a href="{{ expense.bill.url }}"> <img alt="User Pic" src="{{expense.bill.url}}" class="img-circle img-responsive"></a></span>
+            </div>
+        </div>
+            </div>
+</div>
+
+
+</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+
+                    </td>
+                </tr>
+
+        {% else %}
+            <tr class="success">
+                    <td>{{ forloop.counter }}</td>
+                  <td>{{ expense.paid_to }}</td>
+                  <td>{{ expense.subcategories }}</td>
+                  <td>{{ expense.cost }}</td>
+                  <td>{{ expense.date_created }}</td>
+            <td>  <button type="button" class="btn btn-info btn-sm" id="bt2" data-toggle="modal" data-target="#{{ expense.id }}">Detail</button>
+                <a type="submit" class="btn btn-danger btn-sm" href="{% url 'Main:delete' expense.pk %}">Delete</a>
+
+                <div class="modal fade" id="{{ expense.id }}" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+       <div class="modal-body"><div class="row">
+    <div class="col-sm-12 head-containerbs3">
+        <div class="col-sm-7 name-date">
+            <div class="row">
+                <span class="item-titlebs3">{{ expense.paid_to }}</span>
+            </div>
+            <div class="row item-date-div">
+                <span class="item-date">{{ expense.date_created }}</span>
+            </div>
+        </div>
+        <div class="col-sm-5 amount-div-details"><span id="sp2"class="item-amountbs3 positive-amount-details"></span></div>
+     <script>
+$(document).ready(function(){
+    $("#bt2").click(function(){
+        var x={{ expense.cost }};
+                var y = {{ expense.tax_details }};
+
+                        var z=x-(y*x/100);
+        $("#sp2").html('&#x20B9'+'&nbsp'+z);
+    });
+        });
+                </script>
+
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 category-color-bar" style="background-color: #FFFFFF;"></div>
+</div>
+<div class="row">
+    <div class="col-sm-6 column-details left-column-details"> <!-- left column -->
+        <!-- category -->
+        <div class="row">
+            <div class="col-sm-12">
+                <span class="label-details">Category</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <span class="value-details">{{ expense.subcategories }}</span>
+            </div>
+        </div>
+        <!-- account -->
+        <div class="row">
+            <div class="col-sm-12">
+                <span class="label-details">Source</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <span class="value-details">{{ expense.source }}</span>
+            </div>
+        </div>
+
+        <!-- vat id -->
+                <!-- external reference -->
+
+        <div class="row horizontal-separator-out">
+            <div class="col-sm-12 horizontal-separator-in"></div>
+        </div>
+
+                <div class="row">
+            <div class="col-sm-6">
+                <!-- tax -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="label-details">Tax</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="value-details">{{ expense.tax_details }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <!-- tax deductable -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="label-details">VAT ID</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="value-details">{{ expense.vat }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <!-- base -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="label-details">Type</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="value-details">{{ expense.option }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <!-- value tax -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="label-details">Tax amount</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="value-details">{{ expense.tax_details }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </div>
+    <div class="col-sm-6 column-details right-column-details"> <!-- right column -->
+        <!-- description -->
+                <!-- long description -->
+                <!-- attachment -->
+                <div class="row"></div>
+        <!-- is recurrent -->
+        <div class="row">
+            <div class="col-sm-12">
+                <span class="label-details">Is recurrent:{{ is_recurrent }}</span>
+
+            </div>
+        </div><br><br><br>
+        <div class="row">
+            <div class="col-sm-12">
+                <span class="value-details"><a href="{{ expense.bill.url }}"> <img alt="User Pic" src="{{expense.bill.url}}" class="img-circle img-responsive"></a></span>
+            </div>
+        </div>
+            </div>
+</div>
+
+
+</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+
+      </div>
+
+    </div>
+  </div>
+            </td>
+                </tr>
+
+
+        {% endif %}
+
+
+
+    {% endfor %}
+
+
+{% else %}
+                <tr class="info">
+                    <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                <td>NA</td>
+                </tr>
+
+
+{% endif %}

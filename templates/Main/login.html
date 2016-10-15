@@ -1,0 +1,53 @@
+{% extends "Main/base_visitor.html" %}
+{% block body %}<head><style>
+    body{
+        background-image: url("../../static/Main/Images/login-bg.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+</style></head>
+    <br><br><br><br>
+<div class="row">
+<div class="col-sm-4"></div>
+<div class="col-sm-4">
+    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+        {% endif %}
+      <form class="form-signin" id="LoginForm" action="{% url "Main:home" %}" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label  class="sr-only">Username</label>
+        <input type="text" id="inputEmail" name="inputEmail" class="form-control" placeholder="Username" required><br>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required><br>
+        <input class="btn btn-lg btn-primary btn-block" value="SUBMIT" type="submit"/>
+      </form>  <br>
+    <button class="btn btn-lg btn-success btn-block" type="submit"> <a href="{% url "Main:register_user" %}">Not yet registered? Register here</a></button>
+
+</div>
+</div>
+<!--<script type="text/javascript">
+    $(document).on('submit','#LoginForm',function (e) {
+        e.preventDefault();
+        $.ajax({
+            type:'POST',
+            url:'/Main/home',
+            data:{
+                email:$('#inputEmail ').val(),
+                password:$('#inputPassword').val(),
+                csrfmiddlewaretoken:$('input[email=csrfmiddlewaretoken]').val()
+                
+            },
+            sucess:function () {
+                alert("Logged In!")
+            }
+        }
+
+
+        )
+
+    })
+
+</script>!-->
+
+{% endblock %}

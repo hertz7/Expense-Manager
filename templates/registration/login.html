@@ -1,0 +1,82 @@
+
+{% extends "base_visitor.html" %}
+{% load i18n %}
+
+{% block body %}
+
+<head><style>
+    body {
+{#        background-color: #4cb07d;#}
+        background-image: url("../../static/Main/Images/debt.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+
+    .panel-transparent {
+        background: none;
+    }
+
+
+    .panel-transparent .panel-body{
+        background: rgba(46, 51, 56)!important;
+    }
+
+</style></head>
+<form method="post" action="{% url 'auth_login' %}">
+  {% csrf_token %}
+
+
+
+
+
+<br>
+<br><br><br><br>
+
+
+<div class="form-group">
+<div class="container">
+<div class="col-sm-offset-2 col-sm-10"><br>
+                                    <div class="col-sm-4"></div>
+  <div class="panel-group">
+    <div class="panel panel-default" style="width:60%" >
+      <div class="panel-heading" style="text-align:center"><h3><b>Login</b></h3></div>
+      <div class="panel-body">{%  if form.errors %}
+                        <strong>
+                         <span class="text-danger small">
+                        Please enter correct username and password
+                        </span>
+                        </strong>
+                    {% endif %}
+
+
+                        {% if error_message %}
+                            <p><strong>{{ error_message }}</strong></p>
+                        {% endif %}
+
+
+                        <form class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
+
+
+                            {%  include 'form-template.html' %}
+                            <div class="form-group">
+                                <div class="col-sm-1 col-sm-5"><br>
+                                    <div class="col-sm-4"></div>
+                                    <button type="submit" class="btn btn-success " >Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+<div class="form-group">
+
+    <div class="panel panel-footer panel-transparent">
+    <p>{% trans "Forgot password" %}? <a href="{% url 'auth_password_reset' %}">{% trans "Reset it!" %}</a></p>
+<p>{% trans "Not member" %}? <a href="{% url 'registration_register' %}">{% trans "Register" %}</a></p>
+   </div>
+
+
+
+
+
+
+{% endblock %}

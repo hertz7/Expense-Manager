@@ -1,0 +1,322 @@
+
+
+{% extends 'Main/base.html' %}
+
+{% block body %}
+    <head>
+    <style>
+        img.avatar.img-circle {
+    width: 150px;
+}
+    </style>
+    </head>
+
+    <br><br><br><br><br><br>
+    {% if userdetails %}
+
+        <form class="form-horizontal" role="form" method="post" action="{% url 'Main:update' user.id %}" enctype="multipart/form-data">
+{% csrf_token %}
+<div class="container">
+    <h1>Edit Profile</h1>
+  	<hr>
+	<div class="row">
+      <!-- left column -->
+      <div class="col-md-3">
+        <div class="text-center">
+          <img src="{{ userdetails.photo.url }}" class="avatar img-circle" alt="avatar" >
+          <h6>Upload a different photo...</h6>
+
+          <input type="file" name="photo" class="form-control">
+        </div>
+    </div>
+
+      <!-- edit form column -->
+      <div class="col-md-9 personal-info">
+
+        <h3>Personal info</h3>
+            <div class="form-group">
+            <label class="col-lg-3 control-label">Email:</label>
+            <div class="col-lg-8">
+              <input class="form-control" name="email" type="text" value="{{user.email}}" readonly>
+            </div>
+          </div>
+            <div class="form-group">
+            <label class="col-md-3 control-label">Username:</label>
+            <div class="col-md-8">
+              <input class="form-control" name="username" type="text" value="{{user.username}}">
+            </div>
+          </div>
+
+
+
+
+          <div class="form-group">
+            <label class="col-lg-3 control-label">First name:</label>
+            <div class="col-lg-8">
+              <input class="form-control" name="fname" type="text" value="{{user.first_name}}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Last name:</label>
+            <div class="col-lg-8">
+              <input class="form-control" name="lname" type="text" value="{{user.last_name}}">
+            </div>
+          </div>
+
+
+
+
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Company:</label>
+            <div class="col-lg-8">
+
+                    <input class="form-control" name="company" type="text" value="{{ userdetails.company_name }}">
+
+            </div>
+          </div>
+
+
+
+            <div class="form-group">
+            <label class="col-md-3 control-label">Position:</label>
+            <div class="col-md-8">
+
+                    <input class="form-control" name="position" type="text" value="{{userdetails.occupation}}">
+
+            </div>
+          </div>
+
+
+
+             <div class="form-group">
+            <label class="col-md-3 control-label">Date of Joining:</label>
+            <div class="col-md-8">
+
+                    <input class="form-control" type="date" name="doj" value="{{ userdetails.hire_date }}">
+
+            </div>
+          </div>
+
+            <div class="form-group">
+            <label class="col-md-3 control-label"> Company Address:</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" name="com_add" value="{{ userdetails.address }}">
+            </div>
+          </div>
+
+            <div class="form-group">
+            <label class="col-md-3 control-label"> Yearly Package:</label>
+            <div class="col-md-8">
+              <input class="form-control" type="number" name="yp" value="{{ userdetails.yearly_package }}">
+            </div>
+          </div>
+
+            <div class="form-group">
+            <label class="col-md-3 control-label"> PF:</label>
+            <div class="col-md-8">
+              <input class="form-control" type="number" name="pf" value="{{ userdetails.pf }}">
+            </div>
+          </div>
+
+            <div class="form-group">
+            <label class="col-md-3 control-label"> Phone No:(primary)</label>
+            <div class="col-md-8">
+              <input class="form-control" type="number" maxlength="10" name="ph_no" value="{{ userdetails.phone_no }}">
+            </div>
+          </div>
+
+
+
+            <div class="form-group">
+            <label class="col-md-3 control-label">DOB:</label>
+            <div class="col-md-8">
+
+                    <input class="form-control" type="date" name="dob" value="{{ userdetails.dob }}">
+
+            </div>
+          </div>
+
+
+
+
+            <div class="form-group">
+            <label class="col-md-3 control-label"> Permanent Address:</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" name="res_add" value="{{ userdetails.res_address }}">
+            </div>
+          </div>
+
+
+
+          <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8">
+              <input type="submit" class="btn btn-primary" value="Save"></form>
+              <span></span>
+              <a type="submit" href="{% url 'Main:home_page' %}" class="btn btn-default" >Cancel</a>
+            </div>
+          </div>
+
+      </div>
+  </div>
+</div>
+<hr>
+
+
+
+
+    {% else %}
+
+        <form class="form-horizontal"  method="post" action="{% url 'Main:update' user.id %}" enctype="multipart/form-data">
+{% csrf_token %}
+<div class="container">
+    <h1>Edit Profile</h1>
+  	<hr>
+	<div class="row">
+      <!-- left column -->
+      <div class="col-md-3">
+        <div class="text-center">
+          <img src="//placehold.it/100" class="avatar img-circle" alt="avatar" >
+          <h6>Upload a different photo...</h6>
+
+          <input type="file" name="photo" class="form-control">
+        </div></div>
+
+
+      <!-- edit form column -->
+      <div class="col-md-9 personal-info">
+
+        <h3>Personal info</h3>
+
+            <div class="form-group">
+            <label class="col-lg-3 control-label">Email:</label>
+            <div class="col-lg-8">
+              <input class="form-control" name="email" type="text" value="{{ user.email }}" readonly>
+            </div>
+          </div>
+            <div class="form-group">
+            <label class="col-md-3 control-label">Username:</label>
+            <div class="col-md-8">
+              <input class="form-control" name="username" type="text" value="{{ user.username }}" required>
+            </div>
+          </div>
+
+
+
+
+          <div class="form-group">
+            <label class="col-lg-3 control-label">First name:</label>
+            <div class="col-lg-8">
+              <input class="form-control" name="fname" type="text" value="{{ user.first_name }}" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Last name:</label>
+            <div class="col-lg-8">
+              <input class="form-control" name="lname" type="text" value="{{ user.last_name }}" required>
+            </div>
+          </div>
+
+
+
+
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Company:</label>
+            <div class="col-lg-8">
+
+                    <input class="form-control" name="company" type="text" value="" required>
+
+            </div>
+          </div>
+
+
+
+            <div class="form-group">
+            <label class="col-md-3 control-label">Position:</label>
+            <div class="col-md-8">
+
+                    <input class="form-control" name="position" type="text" value="" required>
+
+            </div>
+          </div>
+
+
+
+             <div class="form-group">
+            <label class="col-md-3 control-label">Date of Joining:</label>
+            <div class="col-md-8">
+
+                    <input class="form-control" name="doj" type="date" value="" required>
+
+            </div>
+          </div>
+
+            <div class="form-group">
+            <label class="col-md-3 control-label"> Company Address:</label>
+            <div class="col-md-8">
+              <input class="form-control" name="com_add" type="text" value="" required>
+            </div>
+          </div>
+
+            <div class="form-group">
+            <label class="col-md-3 control-label"> Yearly Package:</label>
+            <div class="col-md-8">
+              <input class="form-control" name="yp" type="text" value="" required>
+            </div>
+          </div>
+
+            <div class="form-group">
+            <label class="col-md-3 control-label"> PF:</label>
+            <div class="col-md-8">
+              <input class="form-control" name="pf" type="text" value="" required>
+            </div>
+          </div>
+
+            <div class="form-group">
+            <label class="col-md-3 control-label"> Phone No:(primary)</label>
+            <div class="col-md-8">
+              <input class="form-control" name="ph_no" type="number" value="" required>
+            </div>
+          </div>
+
+
+
+            <div class="form-group">
+            <label class="col-md-3 control-label">DOB:</label>
+            <div class="col-md-8">
+
+                    <input class="form-control" name="dob" type="date" value="" required>
+
+            </div>
+          </div>
+
+
+
+
+            <div class="form-group">
+            <label class="col-md-3 control-label"> Permanent Address:</label>
+            <div class="col-md-8">
+              <input class="form-control" name="res_add" type="text" value="" required>
+            </div>
+          </div>
+
+
+
+          <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8">
+              <input type="submit" class="btn btn-primary" value="Save"/> </form>
+              <span></span>
+              <a type="submit" href="{% url 'Main:home_page' %}" class="btn btn-default" >Cancel</a>
+            </div>
+          </div>
+
+      </div>
+  </div>
+</div>
+<hr>
+
+
+    {% endif %}
+
+{% endblock %}

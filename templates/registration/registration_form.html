@@ -1,0 +1,74 @@
+{% extends "base_visitor.html" %}
+{% load i18n %}
+
+{% block body %}
+    <head><style>
+    body {
+{#        background-color: #4cb07d;#}
+        background-image: url("../../static/Main/Images/debt.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+
+    .panel-transparent {
+        background: none;
+    }
+
+    .panel-transparent .panel-heading{
+        background: black!important;
+    }
+
+    .panel-transparent .panel-body{
+        background: rgba(46, 51, 56)!important;
+    }
+
+</style></head>
+
+    <div class="container1" style="width:100%; height:100% ; background-image: url('../../static/images/login-bg.jpg')">
+
+
+
+<form method="post" action="">
+  {% csrf_token %}
+<br><br><br><br>
+
+<div class="form-group">
+<div class="container">
+<div class="col-sm-offset-2 col-sm-10"><br>
+                                    <div class="col-sm-4"></div>
+  <div class="panel-group">
+    <div class="panel panel-default" style="width:70%" >
+      <div class="panel-heading" style="text-align:center"><h3><b>Create an Account</b></h3></div>
+
+
+
+
+                    <div class="panel-body">
+                        {% if error_message %}
+                            <p><strong>{{ error_message }}</strong></p>
+                        {% endif %}
+                        <form class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
+
+                            {%  csrf_token %}
+                            {%  include 'form-template.html' %}
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+</form>
+    </div>
+{% endblock %}

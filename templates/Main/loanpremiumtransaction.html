@@ -1,0 +1,229 @@
+{% extends 'Main/base.html' %}
+
+
+{% block body %}<head>
+ <style type="text/css">
+
+.head-container {
+    text-transform: inherit;
+    padding-top: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 15px;
+}
+
+.head-containerbs3 {
+    text-transform: inherit;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 15px;
+}
+
+.category-color-bar {
+    height: 5px !important;
+    min-height: 5px !important;
+}
+
+.item-title {
+    font-size: 40px;
+}
+
+.item-titlebs3 {
+    font-size: 40px;
+}
+
+.item-amount {
+    white-space: nowrap;
+    font-size: 50px;
+}
+
+.item-amountbs3{
+    white-space: nowrap;
+    font-size: 50px;
+    font-weight: 400 !important;
+}
+
+.item-date-div {
+    padding-top: 3px;
+}
+
+.item-date {
+    font-size: 16px;
+}
+
+.positive-amount-details {
+    font-weight: 500;
+    color:#4cb07d;
+}
+
+.negative-amount-details {
+    font-weight: 500;
+    color:#bd4c4f;
+}
+
+.zero-amount-details {
+    font-weight: 500;
+    color:#bdbdbd;
+}
+
+.amount-div-details {
+    text-align: right;
+    height: 100%;
+    padding-top: 25px;
+}
+
+.name-date {
+    padding-top: 15px;
+}
+
+.column-details {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 15px;
+}
+
+.left-column-details {
+    border-right: 1px solid rgb(225,225,225);
+    padding-left: 30px;
+}
+
+.right-column-details {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.label-details {
+    font-size: 11px;
+    color: #757575;
+}
+
+.value-details {
+    font-size: 14px;
+}
+
+.label-details-div {
+    margin-bottom: -10px;
+}
+
+.horizontal-separator-out {
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+.horizontal-separator-in {
+    border-bottom: 1px solid rgb(215,215,215);
+    height: 1px !important;
+    min-height: 1px !important;
+
+}
+.carousel-inner>.item>a>img, .carousel-inner>.item>img, .img-responsive, .thumbnail a>img, .thumbnail>img {
+    display: block;
+    max-width: 100px;
+    height: 100px;
+}
+    </style>
+<style>
+    @media (max-width: 768px) {
+        .page-header-small {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .page-header-small-pointer {
+            cursor: pointer;
+        }
+    }
+    #date_in{
+        width:225px;
+        float: none;
+    }
+    #date_out{
+        width: 225px;
+        float:none;
+    }
+</style></head>
+<body><br><br><br>
+<div class="container-fluid" >
+
+        <div class="row">
+            <div class="col-sm-3 col-xs-12 left-column" > <!-- left column --><br><br><br><br>
+                <div class="container-fluid" style="border: 1px solid black">
+
+                    <div class="row"> <!-- filters -->
+                        <div class="filter-well shadow-box col-sm-12 col-xs-10">
+
+
+<div id="filter-page-header" class="page-header page-header-small page-header-small-pointer">
+  <div onclick="showFilters();" class="container-cat-header"><span>&nbsp;<strong>Filter results</strong></span><span id="filter-icon-down" class="glyphicon glyphicon-menu-down visible-xs pull-left"></span></div>
+
+</div>
+<div id="filter-contents" class="hidden-xs">
+<form method="post" action="{% url 'Main:lpfilter' %}">
+    {% csrf_token %}
+<div class="form-group">
+  <div class="input-group">
+              <label for="date_in" class="control-label order_by_label_jom">From: &nbsp </label>
+
+    <input class="form-control" type="date" name="date_in" id="date_in" size="16"  value=""  placeholder="From"/>
+
+  </div>
+</div>
+<div class="form-group">
+  <div class="input-group">
+              <label for="date_out" class="control-label order_by_label_jom">To:&nbsp &nbsp &nbsp &nbsp</label>
+
+    <input class="form-control " type="date" name="date_out" id="date_out"   value="" placeholder="To"/>
+      </div>
+</div>
+
+
+<input type="submit" class="btn btn-info btn-sm"><br><br>
+     </form>
+    </div>
+    </div>
+                        </div>
+                    </div></div>
+
+
+<div class="col-sm-8">
+
+    <div class="row-horizontal">
+         <div style="text-align: center;"> <h2 class="page-header">Loans and Premiums</h2></div>
+        <input type="text" align="right" id="search" placeholder="Type to search"></div>
+          <div class="table-responsive">
+            <table class="table table-striped" id="table">
+              <thead>
+                <tr>
+                  <th>Sr No.</th>
+                    <th>Loan / Premium</th>
+                  <th>Name</th>
+                  <th>Amount</th>
+                  <th>Start Date:</th>
+                  <th>End Date</th>
+                    <th> Details </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% include 'Main/loanpremium_template.html' %}
+              </tbody>
+            </table>
+          </div>
+
+
+        </div>
+      </div>
+    <script type="text/javascript">
+var $rows = $('#table tr').not('thead tr');
+$('#search').keyup(function() {
+    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+
+    $rows.show().filter(function() {
+        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+        return !~text.indexOf(val);
+    }).hide();
+});
+    </script>
+</body>{% endblock %}
+

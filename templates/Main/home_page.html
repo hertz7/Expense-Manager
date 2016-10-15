@@ -1,0 +1,272 @@
+
+{% extends 'Main/base.html' %}
+
+
+{% block body %}
+ <head><style>
+     @charset "utf-8";
+/* CSS Document */
+
+body{
+    background-color: lightgrey;
+}
+tr.linefinances1 td, tr.linefinances2 td{
+	padding:5px;
+	height:16px;
+
+	background: -moz-linear-gradient(top,  #eeeeee 0%, #f8f8f8 100%); /* FF3.6+ */
+
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#f8f8f8)); /* Chrome,Safari4+ */
+
+	background: -webkit-linear-gradient(top,  #eeeeee 0%,#f8f8f8 100%); /* Chrome10+,Safari5.1+ */
+
+	background: -o-linear-gradient(top,  #eeeeee 0%,#f8f8f8 100%); /* Opera 11.10+ */
+
+	background: -ms-linear-gradient(top,  #eeeeee 0%,#f8f8f8 100%); /* IE10+ */
+
+	background: linear-gradient(to bottom,  #eeeeee 0%,#f8f8f8 100%); /* W3C */
+
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#f8f8f8',GradientType=0 ); /* IE6-9 */
+
+}
+
+tr.footfinances td{
+
+	background-color:#EEEEEE;
+	border-top:2px solid #CCC;
+}
+
+tr.headerfinances td{
+	padding:5px;
+	background-color:#EEEEEE;
+	border-bottom:2px solid #CCC;
+}
+
+
+
+
+.artist_data h3{
+	font-size: 16px;
+    font-weight: normal;
+    line-height: 100%;
+    margin: 0 0 5px;
+    padding: 0;
+
+	border-bottom: 1px solid #ECECEC;
+
+}
+
+
+
+
+
+
+
+.radio.btn-group input[type=radio] {
+display: none;
+}
+
+
+
+
+.resume-number {
+	padding: 10px;
+	font-size: 18px;
+	font-weight: 300;
+	line-height: 18px;
+	color: #FFFFFF;
+	text-align: right;
+	padding-top: 15px;
+}
+
+.resume-income {
+	background: #5cb85c;
+}
+
+.resume-outcome {
+	background: #d9534f;
+}
+
+.resume-balance {
+	background: #eee;
+}
+
+
+
+.resume-balance-zero {
+	color: #777;
+}
+
+.resume-title {
+	padding-top: 5px;
+	font-size: 80%;
+	display: block;
+}
+
+.summary-item {
+	margin-bottom: 10px;
+}
+
+.summary-well {
+	margin-bottom: 20px;
+}
+
+.summary-number {
+	white-space: nowrap;
+	font-size: 25px;
+}
+
+
+
+.input-typeahead > span {
+	height: 30px !important;
+}
+
+.input-typeahead span input {
+	border-radius: 4px !important;
+}
+
+/*http://www.materialup.com/posts/material-design-box-shadows*/
+.shadow-box{
+	//background: #fff;
+	border-radius: 2px;
+
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	transition: all 0.2s ease-in-out;
+}
+
+
+.noshadow-box {
+	border-radius: 2px;
+	transition: all 0.2s ease-in-out;
+}
+
+
+.highlight_item td {
+
+  	background-color: #d9edf7;
+}
+
+.highlight_item_fade td{
+	transition: background-color 2s ease;
+	background-color: transparent;
+}
+
+
+ </style></head> <body>
+   <br><br>{% if balances %}{% for balance in balances %}
+        <div style="text-align: center;">  <h1 class="page-header">DashBoard</h1></div>
+
+                    <div class="row"> <!-- summary -->
+                        <div class="summary-well container-fluid">
+<div class="row" style="margin-left:270px;">
+    <div class="col-sm-3 hidden-xs summary-item noshadow-box resume-number resume-income">
+        <span class="summary-number" id="summary_income_num">{{ balance.income}}</span>
+        <span class="resume-title">Income</span>
+    </div>
+
+
+    <div class="col-sm-3 hidden-xs summary-item noshadow-box resume-number resume-outcome">
+        <span class="summary-number" id="summary_outcome_num">{{ balance.expense }}</span>
+        <span class="resume-title">Outcome</span>
+    </div>
+
+    <div id="resume-background-balance" class="col-sm-3 summary-item noshadow-box resume-number resume-balance resume-balance-zero">
+        <span class="summary-number" id="summary_balance_num">{{ balance.total }}</span>
+        <span class="resume-title">Balance</span>
+    </div>
+
+</div>
+</div>
+{% endfor %}
+   {% else %}
+     <div style="text-align: center;">  <h1 class="page-header">DashBoard</h1></div>
+
+                    <div class="row"> <!-- summary -->
+                        <div class="summary-well container-fluid">
+<div class="row" style="margin-left:270px;">
+    <div class="col-sm-3 hidden-xs summary-item noshadow-box resume-number resume-income">
+        <span class="summary-number" id="summary_income_num">0</span>
+        <span class="resume-title">Income</span>
+    </div>
+
+
+    <div class="col-sm-3 hidden-xs summary-item noshadow-box resume-number resume-outcome">
+        <span class="summary-number" id="summary_outcome_num">0</span>
+        <span class="resume-title">Outcome</span>
+    </div>
+
+    <div id="resume-background-balance" class="col-sm-3 summary-item noshadow-box resume-number resume-balance resume-balance-zero">
+        <span class="summary-number" id="summary_balance_num">0</span>
+        <span class="resume-title">Balance</span>
+    </div>
+
+</div>
+</div>
+                    {% endif %}
+
+                    </div>
+          <div class="row ">
+		  <div class="col-sm-2"></div>
+            <div class="col-sm-2">
+                <a href="{% url "Main:exp_form" %}">
+               <img src="../../static/Main/Images/add.jpg" width="200" height="200" class="img-circle" alt="Generic placeholder thumbnail"></a>
+              <div style="text-align:center;"><h4>Add Expense/Income</h4></div>
+              
+            </div>
+            <div class="col-sm-2 ">
+                <a href="{% url 'Main:loan_form' %}">
+              <img src="../../static/Main/Images/loan.jpg" width="200" height="200" class="img-circle" alt="Generic placeholder thumbnail"></a>
+             <div style="text-align:center;"><h4>Loans and Premiums</h4></div>
+             
+            </div>
+            <div class="col-sm-2">
+                <a href="{% url 'Main:getExpense' %}">
+              <img src="../../static/Main/Images/graph.jpg" width="200" height="200" class="img-circle"alt="Generic placeholder thumbnail"></a>
+             <div style="text-align: center;"><h4>Reports</h4></div>
+              
+            </div>
+            <div class="col-sm-2">
+                <a href="{% url 'Main:profile' %}">
+              <img src="../../static/Main/Images/profile.png" width="200" height="200" class="img-circle" alt="Generic placeholder thumbnail"></a>
+             <div style="text-align: center;"> <h4>Profile</h4></div>
+              
+            </div>
+			<div class="col-sm-2"></div>
+          </div>
+
+		  
+<br>		  
+<div class="row">
+<div class="col-sm-2"></div>
+<div class="col-sm-8">
+         <div style="text-align: center;"> <h2 class="sub-header">Recent Transactions</h2></div>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Sr No.</th>
+                  <th>Name</th>
+                  <th>Category/Source</th>
+                  <th>Amount</th>
+                  <th>Date</th>
+                    <th> Details </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% include 'Main/table_template_dash.html' %}
+              </tbody>
+            </table>
+          </div>
+
+    <a type="button" class="btn btn-success" href="{% url 'Main:transactions' %}" >Expenses/Incomes Records</a>
+    <a type="button" class="btn btn-success" href="{% url 'Main:trans' %}" >Loan/Premium Records</a>
+        </div>
+      </div>
+    </div>
+	</div>
+	<div class="col-sm-2"></div>
+	</div>
+    </body>
+
+{% endblock %}

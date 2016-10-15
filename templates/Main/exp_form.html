@@ -1,0 +1,211 @@
+{% extends 'Main/base.html' %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+
+  {% block  body %}
+      <head>
+      <style>
+          body{
+              background-color: lightgrey;
+          }
+      </style>
+      </head>
+  <body>
+
+  <div class="well well-sm">Expense Manager</div>
+ <!--Panel1-->  <form action=" {% url 'Main:addexpense' %}" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+	<div class="container">
+	 <div class="panel panel-primary">
+      <div class="panel-heading"><h4><b style="text-align: center;">New Transaction</b></h4></div>
+      <div class="panel-body">
+ 
+ <!--Row 1-->  
+  <div class="row">
+  <div class="col-sm-4"><input type="text" name="expname"  class="form-control" id="text1" placeholder="Name" required></div>
+  <div class="col-sm-4"><input type="number" name="amount" class="form-control" id="text2" placeholder="Amount" required></div>
+   <div class="col-sm-4">
+      <label>Date:</label>
+  <input type="date"  name="expdate" required></div>
+  </div><br>
+  <!--Row 1 end-->  
+	 
+  <!--Row 2-->  
+  <div class="row">
+     <div class="col-sm-2">
+ <label> TYPE:</label>
+ <select name="types">
+  <option value="Expense" name="expense">Expense</option>
+       <option value="Income" name="income">Income</option>
+
+ </select>
+  </div>
+
+             <div class="col-sm-2">
+ <label>Source:</label>
+ <select name="cardtypexp">
+     <option value="Cash" name="Cash">Cash</option>
+  <option value="debit" name="debitexp">Debit</option>
+  <option value="credit" name="creditexp">Credit</option>
+  <option value="ewallet" name="ewalletexp">Ewallet</option>
+</select>
+  </div>
+
+
+ <div class="col-sm-4">
+ <label>Sub-Categories:</label>
+ <select name="sub">
+      <option value="None">None</option>
+  <option value="Entertainment">Entertainment</option>
+  <option value="Health">Health</option>
+  <option value="Education">Education</option>
+  <option value="Travel">Travel</option>
+     <option value="Lifestyle">Lifestyle</option>
+     <option value="Food">Food</option>
+     <option value="Sports">Sports</option>
+     <option value="Loan and Premiums">Loan & premiums</option>
+</select>
+  </div>
+ 
+
+
+
+
+   <div class="col-sm-4"><input type="number" name="carddet" class="form-control" id="text1" placeholder="Tax Amount" required></div>
+   </div>
+  <!--Row 2 end-->  
+  
+  <!--Row 3-->  
+  <br><div class="row">
+ 
+<br>
+  <!--Row 3 end-->  
+  <!--panel2-->
+  <div class="row">
+  <div class="col-sm-12">
+  <div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" href="#collapse1"><center>More options</center></a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse">
+        <div class="panel-body"><div id="more_options_group" class="form-horizontal">
+
+    <div class="form-group">
+              <div class="">
+          <label class="col-sm-3 control-label">VAT ID</label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control vat-id-input" name="vat_id" id="vat_id0" placeholder="VAT ID" value="">
+          </div>
+                  </div>
+        <div class="">
+          <label class="col-sm-3 control-label">External Reference</label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control ext-ref-input" name="external_ref" id="external_ref0" placeholder="External Reference" value="">
+          </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Long description</label>
+      <div class="col-sm-9">
+        <textarea class="form-control" rows="4"  type="text" name="long_desc" id="long_desc0" size="50" placeholder="Long description"></textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Attachment</label>
+
+      <div class="col-sm-6">
+        <div class="input-group">
+          <input class="form-control" name="attachment_file_display" id="attachment_file_display_0" type="text" readonly="readonly" value="">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" onclick="jQuery('#attachment_file_0').click();" type="button">Select</button>
+          </span>
+
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <a style="display: none;" class="btn btn-link deleteAttachmentButton">Delete attachment</a>
+      </div>
+
+      <input class="hidden" style="display:none" type="file" name="attachment_file" id="attachment_file_0" onchange="jQuery('#attachment_file_display_0').val(this.value)"/>
+
+    </div>
+
+    <script type="text/javascript">
+    if (jQuery('#attachment_file_display_'+0).val() != "") {
+     jQuery('.deleteAttachmentButton').show();
+   }
+
+   jQuery( ".deleteAttachmentButton" ).click(function() {
+     jQuery('#attachment_file_'+0).val("");
+     jQuery('#attachment_file_display_'+0).val("");
+     jQuery('.deleteAttachmentButton').hide();
+   });
+   </script>
+
+   <div class="form-group">
+
+    <label class="col-sm-3 control-label" for="is_recurrent0" style="padding: 0px;" >Is recurrent</label>
+
+    <div class="col-sm-9">
+        <select name="is_recurrent">
+            <option value="False" name="false">No</option>
+
+  <option value="True" name="true">Yes</option>
+</select>
+    </div>
+
+  </div>
+
+  <div id="recurrency_group">
+    <div class="form-group">
+      <label class="control-label col-sm-3">Repeat every</label>
+      
+      <div class="col-sm-8">
+        <select name="etype" id="rec_year0" class="form-control rec-select">
+                      <option selected value="0">0</option>
+                        <option  value="MONTHLY">Monthly</option>
+
+                        <option  value="YEARLY" >Yearly</option>
+                      </select>
+        </div>
+
+
+          
+          <div class="form-group">
+            <label class="control-label col-sm-3" for="rec_end_rec">End recurrency date</label>
+
+  <input type="date"  name="bday">
+          <span class="help-block col-sm-6">
+             (Leave blank for endless recurrency)</span>
+
+        </div>
+  </div>
+
+    </div>
+
+		</div>
+        
+      </div>
+    </div>
+  </div>
+</div></div>
+  
+  
+  <!--Row 4-->  
+<div class="row">
+  <div class="col-sm-4"></div>
+ <div style="text-align: center;"> <div class="col-sm-4"><button type="submit" class="btn btn-primary">Save</button></div></div>
+  <div class="col-sm-4"></div>
+  </div>
+  <!--Row 4 end-->  
+  </div></div></div>
+         {% endblock %}
+  </body>
+</html>
